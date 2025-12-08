@@ -20,7 +20,7 @@
     <Grid>
         <materialDesign:Card Height="345" VerticalAlignment="Center" HorizontalAlignment="Center" Width="308">
             <Grid>
-                <Image x:Name="IUser" HorizontalAlignment="Center" Height="100" Margin="32" VerticalAlignment="Top" Width="100" Source="/RegIN_Osokin;component/Images/ic-user.png">
+                <Image x:Name="IUser" HorizontalAlignment="Center" Height="100" Margin="32" VerticalAlignment="Top" Width="100" Source="/Images/ic-user.png">
                     <Image.Clip>
                         <EllipseGeometry RadiusX="50" RadiusY="50" Center="50,50"/>
                     </Image.Clip>
