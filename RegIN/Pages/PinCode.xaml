@@ -8,7 +8,7 @@
       Title="PinCode">
 
     <Grid Background="White">
-        <Border BorderBrush="#FF673AB7" BorderThickness="2" CornerRadius="10" 
+        <Border  BorderThickness="2" CornerRadius="10" 
                 Width="350" Height="250" HorizontalAlignment="Center" VerticalAlignment="Center">
             <StackPanel Margin="20">
                 <Label Content="Enter your 4-digit Pin Code:" 
@@ -20,7 +20,6 @@
                 <PasswordBox x:Name="TbPinCode" Height="30" Width="200" 
                             HorizontalAlignment="Center" Margin="0,0,0,15"
                             KeyUp="SetPinCode"/>
-
                 <TextBlock Text="Back" Foreground="#FF673AB7" FontSize="12" 
                           HorizontalAlignment="Center" Cursor="Hand">
                     <TextBlock.InputBindings>

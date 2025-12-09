@@ -7,6 +7,6 @@
         mc:Ignorable="d"
         Title="Модуль авторизации" MinHeight="450" MinWidth="800" Height="450" Width="800" Icon="Images/ic-user.png">
     <Grid>
-        <Frame x:Name="frame" NavigationUIVisibility="Hidden"/>
+        <Frame Name="frame" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>

@@ -70,34 +70,13 @@ namespace RegIN.Classes
             }
             WorkingDB.CloseConnection(mySqlConnection);
         }
-        public void GetPinCode(string login)
-        {
-            try
-            {
-                var connection = WorkingDB.OpenConnection();
-                if (WorkingDB.OpenConnection(connection))
-                {
-                    var reader = WorkingDB.Query($"SELECT pin_code FROM users WHERE login = '{login}'", connection);
-                    if (reader.HasRows)
-                    {
-                        reader.Read();
-                        if (!reader.IsDBNull(0))
-                            this.PinCode = reader.GetString(0);
-                    }
-                }
-                WorkingDB.CloseConnection(connection);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Ошибка получения PIN-кода: {ex.Message}");
-            }
-        }
+
         public void SetUser()
         {
             MySqlConnection mySqlConnection = WorkingDB.OpenConnection();
             if (WorkingDB.OpenConnection(mySqlConnection))
             {
-                MySqlCommand mySqlCommand = new MySqlCommand("INSERT INTO `users` (`Login`, `Password`, `Name`, `Image`, `DateUpdate`, `DateCreate`,) VALUES (@Login, @Password, @Name, @Image, @DateUpdate, @DateCreate, )",
+                MySqlCommand mySqlCommand = new MySqlCommand("INSERT INTO `users` (`Login`, `Password`, `Name`, `Image`, `DateUpdate`, `DateCreate`, `PinCode`) VALUES (@Login, @Password, @Name, @Image, @DateUpdate, @DateCreate, @PinCode)",
                 mySqlConnection);
                 mySqlCommand.Parameters.AddWithValue("@Login", this.Login);
                 mySqlCommand.Parameters.AddWithValue("@Password", this.Password);
@@ -105,10 +84,25 @@ namespace RegIN.Classes
                 mySqlCommand.Parameters.AddWithValue("@Image", this.Image);
                 mySqlCommand.Parameters.AddWithValue("@DateUpdate", this.DateUpdate);
                 mySqlCommand.Parameters.AddWithValue("@DateCreate", this.DateCreate);
+                mySqlCommand.Parameters.AddWithValue("@PinCode", this.PinCode);
                 mySqlCommand.ExecuteNonQuery();
             }
             WorkingDB.CloseConnection(mySqlConnection);
         }
+
+        public void GetPinCode(string pinCode)
+        {
+            MySqlConnection mySqlConnection = WorkingDB.OpenConnection();
+            if (WorkingDB.OpenConnection(mySqlConnection))
+            {
+                MySqlCommand mySqlCommand = new MySqlCommand($"UPDATE `users` SET `PinCode` = '{pinCode}' WHERE `Login` = @Login", mySqlConnection);
+                mySqlCommand.Parameters.AddWithValue("@PinCode", this.PinCode);
+                mySqlCommand.Parameters.AddWithValue("@Login", this.Login);
+                mySqlCommand.ExecuteNonQuery();
+            }
+            WorkingDB.CloseConnection(mySqlConnection);
+        }
+
         public void CreateNewPassword()
         {
             if (Login != String.Empty)
@@ -120,7 +114,7 @@ namespace RegIN.Classes
                     WorkingDB.Query($"UPDATE `users` SET `Password` = '{this.Password}' WHERE `Login` = '{this.Login}'", mySqlConnection);
                 }
                 WorkingDB.CloseConnection(mySqlConnection);
-              
+                SendMail.SendMessage($"Your account password has been changed.\nNew password: {this.Password}", this.Login);
             }
         }
         public string GeneratePass()
