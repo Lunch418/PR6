@@ -25,7 +25,7 @@
                         <EllipseGeometry RadiusX="50" RadiusY="50" Center="50, 50"/>
                     </Image.Clip>
                 </Image>
-                <Label x:Name="LNameUser" Margin="10,137,10,0" HorizontalContentAlignment="Center" Content="" VerticalAlignment="Top"/>
+                <Label x:Name="LNameUser" HorizontalContentAlignment="Center" Content="" VerticalAlignment="Top" Margin="0,137,0,0"/>
                 <Label Content="Enter login:" Margin="10,161,10,0" VerticalAlignment="Top"/>
                 <TextBox x:Name="TbLogin" Height="23" Margin="10,185,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" KeyDown="SetLogin" LostFocus="SetLogin"/>
                 <Label Content="Enter name:" Margin="10,213,10,0" VerticalAlignment="Top"/>
@@ -34,7 +34,7 @@
                 <PasswordBox x:Name="TbPassword" Margin="10,289,10,0" VerticalAlignment="Top" Height="26" KeyDown="SetPassword" LostFocus="SetPassword"/>
                 <Label Content="Confirm the password:" Margin="10,320,10,0" VerticalAlignment="Top"/>
                 <PasswordBox x:Name="TbConfirmPassword" Margin="10,344,10,0" VerticalAlignment="Top" Height="26" KeyDown="ConfirmPassword" LostFocus="ConfirmPassword"/>
-                <Label Content="Back" Margin="10,373,10,0" VerticalAlignment="Top" Foreground="#FF673AB7" FontSize="10" MouseDown="OpenLogin"/>
+                <Label Content="Back" Margin="10,373,10,0" VerticalAlignment="Top"  FontSize="10" MouseDown="OpenLogin"/>
             </Grid>
         </materialDesign:Card>
     </Grid>

@@ -67,8 +67,14 @@ namespace RegIN.Pages
                 {
                     if (MainWindow.mainWindow.UserLogin.Password == TbPassword.Password)
                     {
-                       
-                        
+                        if (string.IsNullOrEmpty(MainWindow.mainWindow.UserLogin.PinCode))
+                        {
+                            MainWindow.mainWindow.OpenPage(new Confirmation(Confirmation.TypeConfirmation.Login));
+                        }
+                        else
+                        {
+                            MainWindow.mainWindow.OpenPage(new PinCode());
+                        }
                     }
                     else
                     {
@@ -171,7 +177,8 @@ namespace RegIN.Pages
 
         public void SetNotification(string Message, SolidColorBrush _Color)
         {
-        
+            LNameUser.Content = Message;
+            LNameUser.Foreground = _Color;
         }
 
         private void SetLogin(object sender, KeyEventArgs e)

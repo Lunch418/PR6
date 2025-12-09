@@ -63,18 +63,22 @@ namespace RegIN.Pages
             if (TbCode.Text == Code.ToString() && TbCode.IsEnabled == true)
             {
                 TbCode.IsEnabled = false;
-                if (ThisTypeConfirmation == TypeConfirmation.Login)
-                {
-                    MessageBox.Show("Авторизация пользоватлея ");
-                }
-                MainWindow.mainWindow.UserLogin.SetUser();
-                MessageBox.Show("Регистарция пользоватлея ");
 
+                string message = ThisTypeConfirmation == TypeConfirmation.Login
+                    ? "Авторизация пользователя успешно подтверждена."
+                    : "Регистрация пользователя успешно подтверждена.";
+                MessageBox.Show(message);
+
+                if (ThisTypeConfirmation == TypeConfirmation.Regin)
+                {
+                    MainWindow.mainWindow.UserLogin.SetUser();
+                }
+                else
+                {
+                    MainWindow.mainWindow.OpenPage(new PinCode());
+                }
             }
         }
-        private void OpenLogin(object sender, MouseButtonEventArgs e)
-        {
-            MainWindow.mainWindow.OpenPage(new Login());
-        }
+        private void OpenLogin(object sender, MouseButtonEventArgs e) => MainWindow.mainWindow.OpenPage(new Login());
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -69,7 +70,28 @@ namespace RegIN.Classes
             }
             WorkingDB.CloseConnection(mySqlConnection);
         }
-
+        public void GetPinCode(string login)
+        {
+            try
+            {
+                var connection = WorkingDB.OpenConnection();
+                if (WorkingDB.OpenConnection(connection))
+                {
+                    var reader = WorkingDB.Query($"SELECT pin_code FROM users WHERE login = '{login}'", connection);
+                    if (reader.HasRows)
+                    {
+                        reader.Read();
+                        if (!reader.IsDBNull(0))
+                            this.PinCode = reader.GetString(0);
+                    }
+                }
+                WorkingDB.CloseConnection(connection);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Ошибка получения PIN-кода: {ex.Message}");
+            }
+        }
         public void SetUser()
         {
             MySqlConnection mySqlConnection = WorkingDB.OpenConnection();
