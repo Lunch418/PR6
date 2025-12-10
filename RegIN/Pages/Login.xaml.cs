@@ -65,29 +65,32 @@ namespace RegIN.Pages
             {
                 if (IsCapture)
                 {
-                    if (MainWindow.mainWindow.UserLogin.Password == TbPassword.Password)
+                    // Проверяем, есть ли у пользователя PIN-код
+                    bool hasPinCode = !string.IsNullOrEmpty(MainWindow.mainWindow.UserLogin.PinCode);
+
+                    if (hasPinCode)
                     {
-                        if (string.IsNullOrEmpty(MainWindow.mainWindow.UserLogin.PinCode))
+                        // Если есть PIN-код, проверяем его
+                        if (MainWindow.mainWindow.UserLogin.PinCode == TbPassword.Password)
+                        {
+                            // PIN-код верный - переходим к подтверждению входа
+                            MainWindow.mainWindow.OpenPage(new Confirmation(Confirmation.TypeConfirmation.Login));
+                        }
+                        else
+                        {
+                            // Неверный PIN-код
+                            HandleInvalidCredential("PIN code");
+                        }
+                    }
+                    else
+                    {
+                        if (MainWindow.mainWindow.UserLogin.Password == TbPassword.Password)
                         {
                             MainWindow.mainWindow.OpenPage(new Confirmation(Confirmation.TypeConfirmation.Login));
                         }
                         else
                         {
-                            MainWindow.mainWindow.OpenPage(new PinCode());
-                        }
-                    }
-                    else
-                    {
-                        if (CountSetPassword > 0)
-                        {
-                            SetNotification($"Password is incorrect, {CountSetPassword} attempts left", Brushes.Red);
-                            CountSetPassword--;
-                        }
-                        else
-                        {
-                            Thread TBlockAuthorization = new Thread(BlockAuthorization);
-                            TBlockAuthorization.Start();
-                            SendMail.SendMessage("An attempt was made to log into your account.", MainWindow.mainWindow.UserLogin.Login);
+                            HandleInvalidCredential("password");
                         }
                     }
                 }
@@ -95,6 +98,21 @@ namespace RegIN.Pages
                 {
                     SetNotification("Enter capture", Brushes.Red);
                 }
+            }
+        }
+
+        private void HandleInvalidCredential(string credentialType)
+        {
+            if (CountSetPassword > 0)
+            {
+                SetNotification($"{credentialType} is incorrect, {CountSetPassword} attempts left", Brushes.Red);
+                CountSetPassword--;
+            }
+            else
+            {
+                Thread TBlockAuthorization = new Thread(BlockAuthorization);
+                TBlockAuthorization.Start();
+                SendMail.SendMessage("An attempt was made to log into your account.", MainWindow.mainWindow.UserLogin.Login);
             }
         }
         public void BlockAuthorization()

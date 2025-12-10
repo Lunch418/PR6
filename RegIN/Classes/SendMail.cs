@@ -15,10 +15,10 @@ namespace RegIN.Classes
             var smtpClient = new SmtpClient("smtp.yandex.ru")
             {
                 Port = 587,
-                Credentials = new NetworkCredential("Lunch418@yandex.ru", "sptqngaikugelbdq"),
+                Credentials = new NetworkCredential("Lunch418@yandex.ru", "nxacsnitrtptxien"),
                 EnableSsl = true,
             };
-            smtpClient.Send("Lunch418@yandex.ru", To, "123", Message);
+            smtpClient.Send("Lunch418@yandex.ru", To, "Практика", Message);
         }
     }
 }

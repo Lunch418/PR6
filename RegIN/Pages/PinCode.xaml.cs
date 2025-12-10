@@ -63,7 +63,7 @@ namespace RegIN.Pages
                     var connection = Classes.WorkingDB.OpenConnection();
                     if (Classes.WorkingDB.OpenConnection(connection))
                     {
-                        string query = $"UPDATE users SET pin_code = '{TbPinCode.Password}' WHERE login = '{MainWindow.mainWindow.UserLogin.Login}'";
+                        string query = $"UPDATE users SET PinCode = '{TbPinCode.Password}' WHERE login = '{MainWindow.mainWindow.UserLogin.Login}'";
                         Classes.WorkingDB.Query(query, connection);
                     }
                     Classes.WorkingDB.CloseConnection(connection);
@@ -87,6 +87,11 @@ namespace RegIN.Pages
             {
                 MainWindow.mainWindow.OpenPage(new Login());
             }
+        }
+
+        private void back(object sender, RoutedEventArgs e)
+        {
+            MainWindow.mainWindow.OpenPage(new Login());
         }
     }
 }

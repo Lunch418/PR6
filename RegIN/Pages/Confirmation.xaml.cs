@@ -36,14 +36,20 @@ namespace RegIN.Pages
         public void SendMailCode()
         {
             Code = new Random().Next(100000, 999999);
-            Classes.SendMail.SendMessage($"Login code: {Code}", MainWindow.mainWindow.UserLogin.Login);
+            string subject = "Код подтверждения для RegIN";
+            string message = $"Здравствуйте!\n\n" +
+                           $"Ваш код подтверждения: {Code}\n\n" +
+                           $"Если вы не запрашивали этот код, проигнорируйте это письмо.\n\n" +
+                           $"С уважением,\nСистема RegIN";
+
+            Classes.SendMail.SendMessage(message, MainWindow.mainWindow.UserLogin.Login);
             TimerSendMailCode();
         }
         public async void TimerSendMailCode()
         {
             for (int i = 0; i < 60; i++)
             {
-                LTimer.Content = $"A second message can be sent after {60 - i} seconds";
+                LTimer.Content = $"Повторное письмо можно отправить через {60 - i} секунд";
                 await Task.Delay(1000);
             }
 
@@ -55,7 +61,6 @@ namespace RegIN.Pages
         {
             if (TbCode.Text.Length == 6)
                 SetCode();
-
         }
         private void SetCode(object sender, RoutedEventArgs e) => SetCode();
         void SetCode()
